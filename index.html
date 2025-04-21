@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>S3 + RDS Image Gallery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Upload Image</h1>
+  <form action="upload.php" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+    <button type="submit">Upload</button>
+  </form>
+
+  <h2>Gallery</h2>
+  <div id="gallery"></div>
+
+  <script>
+    fetch('list.php')
+      .then(res => res.json())
+      .then(data => {
+        const gallery = document.getElementById('gallery');
+        data.forEach(img => {
+          const div = document.createElement('div');
+          div.innerHTML = `<p>${img.filename}</p><img src="${img.url}" alt="${img.filename}" width="200"/>`;
+          gallery.appendChild(div);
+        });
+      });
+  </script>
+</body>
+</html>
